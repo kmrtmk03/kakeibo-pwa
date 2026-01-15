@@ -1,104 +1,115 @@
-import { useState, type ReactElement } from 'react'
+/**
+ * @fileoverview 取引追加画面コンポーネント
+ *
+ * このコンポーネントは家計簿アプリの取引追加画面を担当します。
+ * ロジック（状態管理、ハンドラ）は useAddTransaction フックに分離されており、
+ * このファイルは純粋なビュー層として機能します。
+ *
+ * @module pages/kakeibo/AddTransactionPage
+ */
+
+import type { ReactElement } from 'react'
 import type { TransactionType, Category } from '../../../types/transaction'
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '../../../constants/categories'
+import { useAddTransaction } from '../../../hooks/useAddTransaction'
 import { NumPad } from '../../../components/NumPad'
 import styles from './AddTransactionPage.module.sass'
 
+// ==============================================
+// 型定義
+// ==============================================
+
+/**
+ * AddTransactionPage コンポーネントのプロパティ
+ */
 interface AddTransactionPageProps {
-  /** 取引追加ハンドラ */
-  onAddTransaction: (type: TransactionType, amount: number, category: Category, note: string) => void
-  /** 追加完了後のコールバック */
+  /** 取引追加ハンドラ（親コンポーネントから渡される） */
+  onAddTransaction: (
+    type: TransactionType,
+    amount: number,
+    category: Category,
+    note: string
+  ) => void
+  /** 追加完了後のコールバック（通常はホーム画面への遷移） */
   onComplete: () => void
 }
 
+// ==============================================
+// コンポーネント
+// ==============================================
+
 /**
  * 取引追加画面コンポーネント
- * 金額入力、カテゴリ選択、メモ入力が可能
+ *
+ * @description
+ * 支出/収入の記録を追加するための画面です。
+ * - 支出/収入の切り替え
+ * - カテゴリ選択
+ * - 金額入力（テンキー）
+ * - メモ入力
+ *
+ * @example
+ * ```tsx
+ * <AddTransactionPage
+ *   onAddTransaction={addTransaction}
+ *   onComplete={() => setActiveTab('home')}
+ * />
+ * ```
  */
 export function AddTransactionPage({
   onAddTransaction,
   onComplete,
 }: AddTransactionPageProps): ReactElement {
-  // 入力タイプ（支出/収入）
-  const [inputType, setInputType] = useState<TransactionType>('expense')
-  // 金額（文字列として管理）
-  const [amount, setAmount] = useState('')
-  // 選択中のカテゴリ
-  const [selectedCategory, setSelectedCategory] = useState<Category>(EXPENSE_CATEGORIES[0])
-  // メモ
-  const [note, setNote] = useState('')
+  // ==============================================
+  // カスタムフックからロジックを取得
+  // ==============================================
+  const {
+    // 状態
+    inputType,
+    amount,
+    selectedCategory,
+    note,
+    // 派生値
+    categories,
+    isSubmitDisabled,
+    // ハンドラ
+    handleNumInput,
+    handleNumDelete,
+    handleTypeChange,
+    handleCategorySelect,
+    handleNoteChange,
+    handleSubmit,
+  } = useAddTransaction({ onAddTransaction, onComplete })
 
-  // 表示するカテゴリ一覧
-  const categories = inputType === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES
-
-  /**
-   * 数字入力ハンドラ
-   */
-  const handleNumInput = (val: string) => {
-    setAmount((prev) => {
-      const current = prev || ''
-      // 8桁まで
-      if (current.length >= 8) return current
-      return current + val
-    })
-  }
-
-  /**
-   * 削除ハンドラ
-   */
-  const handleNumDelete = () => {
-    setAmount((prev) => {
-      const current = prev || ''
-      return current.slice(0, -1)
-    })
-  }
-
-  /**
-   * タイプ切り替えハンドラ
-   */
-  const handleTypeChange = (type: TransactionType) => {
-    setInputType(type)
-    // カテゴリもリセット
-    setSelectedCategory(type === 'expense' ? EXPENSE_CATEGORIES[0] : INCOME_CATEGORIES[0])
-  }
-
-  /**
-   * 決定ボタンハンドラ
-   */
-  const handleSubmit = () => {
-    if (!amount || Number(amount) === 0) return
-
-    onAddTransaction(inputType, Number(amount), selectedCategory, note)
-
-    // リセット
-    setAmount('')
-    setNote('')
-    onComplete()
-  }
-
+  // ==============================================
+  // レンダリング
+  // ==============================================
   return (
     <div className={styles.container}>
-      {/* ヘッダー */}
-      <div className={styles.header}>
+      {/* ========== ヘッダー ========== */}
+      <header className={styles.header}>
         <h2 className={styles.title}>記録を追加</h2>
+
+        {/* 支出/収入 切り替えトグル */}
         <div className={styles.typeToggle}>
           <button
             onClick={() => handleTypeChange('expense')}
-            className={`${styles.typeButton} ${inputType === 'expense' ? styles.expenseActive : ''}`}
+            className={`${styles.typeButton} ${inputType === 'expense' ? styles.expenseActive : ''
+              }`}
           >
             支出
           </button>
           <button
             onClick={() => handleTypeChange('income')}
-            className={`${styles.typeButton} ${inputType === 'income' ? styles.incomeActive : ''}`}
+            className={`${styles.typeButton} ${inputType === 'income' ? styles.incomeActive : ''
+              }`}
           >
             収入
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* カテゴリ選択 */}
-      <div className={styles.categorySection}>
+      {/* ========== カテゴリ選択セクション ========== */}
+      <section className={styles.categorySection}>
         <p className={styles.sectionLabel}>カテゴリ</p>
         <div className={styles.categoryGrid}>
           {categories.map((cat) => {
@@ -107,10 +118,13 @@ export function AddTransactionPage({
             return (
               <button
                 key={cat.id}
-                onClick={() => setSelectedCategory(cat)}
-                className={`${styles.categoryButton} ${isSelected ? styles.selected : ''}`}
+                onClick={() => handleCategorySelect(cat)}
+                className={`${styles.categoryButton} ${isSelected ? styles.selected : ''
+                  }`}
               >
-                <div className={`${styles.categoryIcon} ${styles[cat.colorClass]}`}>
+                <div
+                  className={`${styles.categoryIcon} ${styles[cat.colorClass]}`}
+                >
                   <IconComponent size={20} />
                 </div>
                 <span className={styles.categoryName}>{cat.name}</span>
@@ -125,19 +139,22 @@ export function AddTransactionPage({
           <input
             type="text"
             value={note}
-            onChange={(e) => setNote(e.target.value)}
+            onChange={(e) => handleNoteChange(e.target.value)}
             placeholder="例：ランチ、日用品..."
             className={styles.noteInput}
           />
         </div>
-      </div>
+      </section>
 
-      {/* キーパッドエリア */}
+      {/* ========== キーパッドエリア ========== */}
       <div className={styles.keypadArea}>
         {/* 金額表示（キーパッドの上に配置） */}
         <div className={styles.amountSection}>
           <div className={styles.amountDisplay}>
-            <span className={`${styles.currency} ${inputType === 'expense' ? styles.expense : styles.income}`}>
+            <span
+              className={`${styles.currency} ${inputType === 'expense' ? styles.expense : styles.income
+                }`}
+            >
               ¥
             </span>
             <input
@@ -145,20 +162,25 @@ export function AddTransactionPage({
               readOnly
               value={amount}
               placeholder="0"
-              className={`${styles.amountInput} ${inputType === 'expense' ? styles.expense : styles.income}`}
+              className={`${styles.amountInput} ${inputType === 'expense' ? styles.expense : styles.income
+                }`}
             />
           </div>
         </div>
+
+        {/* テンキー */}
         <NumPad onInput={handleNumInput} onDelete={handleNumDelete} />
+
+        {/* 決定ボタン */}
         <div className={styles.submitSection}>
           <button
             onClick={handleSubmit}
-            disabled={!amount}
-            className={`${styles.submitButton} ${!amount
-              ? styles.disabled
-              : inputType === 'expense'
-                ? styles.expenseButton
-                : styles.incomeButton
+            disabled={isSubmitDisabled}
+            className={`${styles.submitButton} ${isSubmitDisabled
+                ? styles.disabled
+                : inputType === 'expense'
+                  ? styles.expenseButton
+                  : styles.incomeButton
               }`}
           >
             決定

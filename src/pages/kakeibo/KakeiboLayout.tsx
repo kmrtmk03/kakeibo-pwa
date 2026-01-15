@@ -1,3 +1,17 @@
+/**
+ * @fileoverview 家計簿アプリのレイアウトコンポーネント
+ *
+ * このコンポーネントは家計簿アプリ全体のレイアウトを管理します。
+ * - 画面（タブ）の切り替え
+ * - 取引データの状態管理（useTransactionsフック経由）
+ * - ナビゲーションバーの配置
+ *
+ * 各画面（HomePage, AddTransactionPage, StatsPage）は
+ * このコンポーネントから必要なpropsを受け取ります。
+ *
+ * @module pages/kakeibo/KakeiboLayout
+ */
+
 import { useState, type ReactElement } from 'react'
 import type { TabType } from '../../components/Navigation'
 import { Navigation } from '../../components/Navigation'

@@ -1,3 +1,14 @@
+/**
+ * @fileoverview ホーム画面コンポーネント
+ *
+ * このコンポーネントは家計簿アプリのホーム画面を担当します。
+ * 月別の残高、収支サマリー、取引履歴一覧を表示します。
+ * 純粋なビューコンポーネントとして設計されており、
+ * 状態管理は親コンポーネント（KakeiboLayout）から渡されます。
+ *
+ * @module pages/kakeibo/HomePage
+ */
+
 import type { ReactElement } from 'react'
 import { ChevronLeft, ChevronRight, TrendingUp, TrendingDown, Trash2 } from 'lucide-react'
 import type { Transaction } from '../../../types/transaction'
