@@ -35,7 +35,7 @@ pnpm dev
 npm run dev
 ```
 
-ブラウザで `http://localhost:5173/game` を開きます。（`basename="/game"` が設定されています）
+ブラウザで `http://localhost:5173/` を開きます。
 
 ## ビルド
 
@@ -87,7 +87,7 @@ npm run compress:80     # 品質80で圧縮
 - **スタイル自動読み込み**: `vite.config.ts` の設定により、すべての Sass ファイルで `mixins` と `variables` が自動的に利用可能です。
 - **型安全**: TypeScript をフル活用し、コンポーネントやユーティリティの型安全性を確保しています。
 - **リッチなアニメーション**: Framer Motion と GSAP が導入済みで、高度な UI アニメーションを容易に実装できます。
-- **ベースパス設定**: React Router に `/game` ベースパスが設定されており、特定のサブディレクトリ配下での動作を想定しています。
+- **サブディレクトリ対応**: 必要に応じて `vite.config.ts` の `base` や React Router の `basename` を設定することで、サブディレクトリ配下での動作も可能です。
 
 ## コミットメッセージの提案
 
