@@ -90,17 +90,17 @@ $category-bonus: rgba(45, 212, 191, 0.3), #2DD4BF
     box-shadow: 0 4px 15px rgba(0, 217, 255, 0.4)
 
 // ==============================================
-// 金額セクション
+// 金額セクション（キーパッド上部）
 // ==============================================
 .amountSection
-  padding: 2rem 1.5rem
+  padding: 0.75rem 1.5rem
   text-align: center
-  background: linear-gradient(180deg, $glass-bg 0%, transparent 100%)
+  border-bottom: 1px solid $border-glass
 
 .amountLabel
   color: $text-muted
   font-size: 0.875rem
-  margin-bottom: 1rem
+  margin-bottom: 0.5rem
 
 .amountDisplay
   position: relative
@@ -108,25 +108,26 @@ $category-bonus: rgba(45, 212, 191, 0.3), #2DD4BF
   align-items: center
   justify-content: center
   width: 100%
-  max-width: 16rem
 
 .currency
-  font-size: 2rem
+  font-size: 1.25rem
   font-weight: 700
-  margin-right: 0.5rem
+  margin-right: 0.25rem
 
   &.expense
     color: $accent-pink
-    text-shadow: 0 0 30px rgba(255, 107, 157, 0.6)
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.5)
 
   &.income
     color: $accent-cyan
-    text-shadow: 0 0 30px rgba(0, 217, 255, 0.6)
+    text-shadow: 0 0 20px rgba(0, 217, 255, 0.5)
 
 .amountInput
-  width: 100%
+  width: auto
+  min-width: 2rem
+  max-width: 10rem
   text-align: center
-  font-size: 3.5rem
+  font-size: 1.75rem
   font-weight: 700
   letter-spacing: -0.02em
   background: transparent
@@ -138,14 +139,14 @@ $category-bonus: rgba(45, 212, 191, 0.3), #2DD4BF
 
   &.expense
     color: $accent-pink
-    text-shadow: 0 0 40px rgba(255, 107, 157, 0.5)
+    text-shadow: 0 0 30px rgba(255, 107, 157, 0.4)
 
     &::placeholder
       color: rgba(255, 107, 157, 0.3)
 
   &.income
     color: $accent-cyan
-    text-shadow: 0 0 40px rgba(0, 217, 255, 0.5)
+    text-shadow: 0 0 30px rgba(0, 217, 255, 0.4)
 
     &::placeholder
       color: rgba(0, 217, 255, 0.3)
@@ -154,7 +155,7 @@ $category-bonus: rgba(45, 212, 191, 0.3), #2DD4BF
 // カテゴリセクション
 // ==============================================
 .categorySection
-  padding: 0 1.25rem 1rem
+  padding: 1.5rem 1.25rem 1rem
   flex: 1
   overflow-y: auto
 

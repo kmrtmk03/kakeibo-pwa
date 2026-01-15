@@ -97,23 +97,6 @@ export function AddTransactionPage({
         </div>
       </div>
 
-      {/* 金額表示 */}
-      <div className={styles.amountSection}>
-        <p className={styles.amountLabel}>金額を入力</p>
-        <div className={styles.amountDisplay}>
-          <span className={`${styles.currency} ${inputType === 'expense' ? styles.expense : styles.income}`}>
-            ¥
-          </span>
-          <input
-            type="text"
-            readOnly
-            value={amount}
-            placeholder="0"
-            className={`${styles.amountInput} ${inputType === 'expense' ? styles.expense : styles.income}`}
-          />
-        </div>
-      </div>
-
       {/* カテゴリ選択 */}
       <div className={styles.categorySection}>
         <p className={styles.sectionLabel}>カテゴリ</p>
@@ -151,6 +134,21 @@ export function AddTransactionPage({
 
       {/* キーパッドエリア */}
       <div className={styles.keypadArea}>
+        {/* 金額表示（キーパッドの上に配置） */}
+        <div className={styles.amountSection}>
+          <div className={styles.amountDisplay}>
+            <span className={`${styles.currency} ${inputType === 'expense' ? styles.expense : styles.income}`}>
+              ¥
+            </span>
+            <input
+              type="text"
+              readOnly
+              value={amount}
+              placeholder="0"
+              className={`${styles.amountInput} ${inputType === 'expense' ? styles.expense : styles.income}`}
+            />
+          </div>
+        </div>
         <NumPad onInput={handleNumInput} onDelete={handleNumDelete} />
         <div className={styles.submitSection}>
           <button
