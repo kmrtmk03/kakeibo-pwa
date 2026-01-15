@@ -22,7 +22,7 @@ export const EXPENSE_CATEGORIES: Category[] = [
   { id: 'transport', name: '交通費', icon: Train, colorClass: 'category-transport' },
   { id: 'fashion', name: '衣服', icon: Shirt, colorClass: 'category-fashion' },
   { id: 'social', name: '交際費', icon: Users, colorClass: 'category-social' },
-  { id: 'credit', name: 'カード引き落とし', icon: CreditCard, colorClass: 'category-credit' },
+  { id: 'credit', name: 'カード', icon: CreditCard, colorClass: 'category-credit' },
   { id: 'hobby', name: '趣味', icon: Gamepad2, colorClass: 'category-hobby' },
   { id: 'cafe', name: 'カフェ', icon: Coffee, colorClass: 'category-cafe' },
   { id: 'other', name: 'その他', icon: MoreHorizontal, colorClass: 'category-other' },
