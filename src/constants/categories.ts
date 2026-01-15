@@ -2,13 +2,14 @@ import {
   Utensils,
   ShoppingBag,
   Train,
-  Zap,
-  Stethoscope,
   Gamepad2,
   Coffee,
   MoreHorizontal,
   Wallet,
   TrendingUp,
+  Shirt,
+  Users,
+  CreditCard,
 } from 'lucide-react'
 import type { Category } from '../types/transaction'
 
@@ -19,8 +20,9 @@ export const EXPENSE_CATEGORIES: Category[] = [
   { id: 'food', name: '食費', icon: Utensils, colorClass: 'category-food' },
   { id: 'daily', name: '日用品', icon: ShoppingBag, colorClass: 'category-daily' },
   { id: 'transport', name: '交通費', icon: Train, colorClass: 'category-transport' },
-  { id: 'utility', name: '光熱費', icon: Zap, colorClass: 'category-utility' },
-  { id: 'medical', name: '医療費', icon: Stethoscope, colorClass: 'category-medical' },
+  { id: 'fashion', name: '衣服', icon: Shirt, colorClass: 'category-fashion' },
+  { id: 'social', name: '交際費', icon: Users, colorClass: 'category-social' },
+  { id: 'credit', name: 'カード引き落とし', icon: CreditCard, colorClass: 'category-credit' },
   { id: 'hobby', name: '趣味', icon: Gamepad2, colorClass: 'category-hobby' },
   { id: 'cafe', name: 'カフェ', icon: Coffee, colorClass: 'category-cafe' },
   { id: 'other', name: 'その他', icon: MoreHorizontal, colorClass: 'category-other' },
