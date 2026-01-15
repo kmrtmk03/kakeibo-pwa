@@ -104,8 +104,11 @@ export function HomePage({
                       <div>
                         <p className={styles.categoryName}>{t.category.name}</p>
                         <p className={styles.transactionMeta}>
-                          {new Date(t.date).toLocaleDateString()} {t.note && `• ${t.note}`}
+                          {new Date(t.date).toLocaleDateString()}
                         </p>
+                        {t.note && (
+                          <p className={styles.transactionNote}>{t.note}</p>
+                        )}
                       </div>
                     </div>
                     <div className={styles.transactionRight}>

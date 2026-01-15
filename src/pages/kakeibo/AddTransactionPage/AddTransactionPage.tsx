@@ -151,21 +151,21 @@ export function AddTransactionPage({
 
       {/* キーパッドエリア */}
       <div className={styles.keypadArea}>
+        <NumPad onInput={handleNumInput} onDelete={handleNumDelete} />
         <div className={styles.submitSection}>
           <button
             onClick={handleSubmit}
             disabled={!amount}
             className={`${styles.submitButton} ${!amount
-                ? styles.disabled
-                : inputType === 'expense'
-                  ? styles.expenseButton
-                  : styles.incomeButton
+              ? styles.disabled
+              : inputType === 'expense'
+                ? styles.expenseButton
+                : styles.incomeButton
               }`}
           >
             決定
           </button>
         </div>
-        <NumPad onInput={handleNumInput} onDelete={handleNumDelete} />
       </div>
     </div>
   )
