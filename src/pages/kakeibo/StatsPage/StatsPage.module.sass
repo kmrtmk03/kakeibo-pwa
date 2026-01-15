@@ -1,0 +1,221 @@
+// カラー変数
+$primary: #10b981
+$text-dark: #374151
+$text-gray: #6b7280
+$text-light: #9ca3af
+$bg-light: #f9fafb
+$bg-white: #fff
+$border-light: #f3f4f6
+
+// カテゴリカラー
+$category-food: #fed7aa, #ea580c
+$category-daily: #bfdbfe, #2563eb
+$category-transport: #bbf7d0, #16a34a
+$category-utility: #fef08a, #ca8a04
+$category-medical: #fecaca, #dc2626
+$category-hobby: #e9d5ff, #9333ea
+$category-cafe: #fef3c7, #b45309
+$category-other: #e5e7eb, #4b5563
+$category-salary: #a7f3d0, #059669
+$category-bonus: #99f6e4, #0d9488
+
+.container
+  height: 100%
+  background-color: $bg-light
+
+.header
+  background-color: $bg-white
+  padding: 3rem 1.5rem 1rem
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05)
+  position: sticky
+  top: 0
+  z-index: 10
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+.title
+  font-size: 1.25rem
+  font-weight: 700
+  color: #1f2937
+
+.monthSelector
+  display: flex
+  align-items: center
+  background-color: #f3f4f6
+  border-radius: 9999px
+  padding: 0.25rem
+
+.monthButton
+  padding: 0.375rem
+  border-radius: 50%
+  transition: all 0.2s
+  background: none
+  border: none
+  color: $text-gray
+  cursor: pointer
+
+  &:hover
+    background-color: $bg-white
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05)
+
+.monthLabel
+  margin: 0 0.5rem
+  font-size: 0.875rem
+  font-weight: 700
+  color: $text-dark
+  width: 5rem
+  text-align: center
+
+.content
+  padding: 1rem
+
+.yearLabel
+  text-align: center
+  margin-bottom: 1.5rem
+  color: $text-light
+  font-size: 0.75rem
+
+.totalCard
+  background-color: $bg-white
+  padding: 1.5rem
+  border-radius: 1rem
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05)
+  margin-bottom: 1.5rem
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+
+.totalCircle
+  width: 8rem
+  height: 8rem
+  border-radius: 50%
+  border: 12px solid rgba(16, 185, 129, 0.1)
+  display: flex
+  align-items: center
+  justify-content: center
+  position: relative
+
+.totalInner
+  text-align: center
+
+.totalLabel
+  font-size: 0.75rem
+  color: $text-light
+  display: block
+
+.totalAmount
+  font-weight: 700
+  color: #1f2937
+  font-size: 1.25rem
+
+.sectionTitle
+  font-weight: 700
+  color: $text-dark
+  margin-bottom: 1rem
+  padding: 0 0.25rem
+
+.categoryList
+  display: flex
+  flex-direction: column
+  gap: 0.75rem
+
+.categoryCard
+  background-color: $bg-white
+  padding: 1rem
+  border-radius: 0.75rem
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05)
+
+.categoryHeader
+  display: flex
+  align-items: center
+  justify-content: space-between
+  margin-bottom: 0.5rem
+
+.categoryInfo
+  display: flex
+  align-items: center
+  gap: 0.75rem
+
+.categoryIcon
+  width: 2rem
+  height: 2rem
+  border-radius: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+
+// カテゴリ別スタイル
+.category-food
+  background-color: nth($category-food, 1)
+  color: nth($category-food, 2)
+
+.category-daily
+  background-color: nth($category-daily, 1)
+  color: nth($category-daily, 2)
+
+.category-transport
+  background-color: nth($category-transport, 1)
+  color: nth($category-transport, 2)
+
+.category-utility
+  background-color: nth($category-utility, 1)
+  color: nth($category-utility, 2)
+
+.category-medical
+  background-color: nth($category-medical, 1)
+  color: nth($category-medical, 2)
+
+.category-hobby
+  background-color: nth($category-hobby, 1)
+  color: nth($category-hobby, 2)
+
+.category-cafe
+  background-color: nth($category-cafe, 1)
+  color: nth($category-cafe, 2)
+
+.category-other
+  background-color: nth($category-other, 1)
+  color: nth($category-other, 2)
+
+.category-salary
+  background-color: nth($category-salary, 1)
+  color: nth($category-salary, 2)
+
+.category-bonus
+  background-color: nth($category-bonus, 1)
+  color: nth($category-bonus, 2)
+
+.categoryName
+  font-weight: 500
+  color: $text-dark
+
+.categoryAmount
+  text-align: right
+
+.amountValue
+  font-weight: 700
+  display: block
+
+.percentValue
+  font-size: 0.75rem
+  color: $text-light
+
+.progressBar
+  width: 100%
+  background-color: #f3f4f6
+  height: 0.5rem
+  border-radius: 9999px
+  overflow: hidden
+
+.progressFill
+  height: 100%
+  background-color: $primary
+  border-radius: 9999px
+  transition: width 0.3s ease
+
+.emptyState
+  text-align: center
+  padding: 2.5rem 0
+  color: $text-light

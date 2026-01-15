@@ -1,0 +1,271 @@
+// カラー変数
+$primary: #10b981
+$expense-color: #f43f5e
+$income-color: #10b981
+$text-dark: #374151
+$text-gray: #9ca3af
+$bg-light: #f9fafb
+$border-light: #e5e7eb
+
+// カテゴリカラー (背景色, 文字色)
+$category-food: #fed7aa, #ea580c
+$category-daily: #bfdbfe, #2563eb
+$category-transport: #bbf7d0, #16a34a
+$category-utility: #fef08a, #ca8a04
+$category-medical: #fecaca, #dc2626
+$category-hobby: #e9d5ff, #9333ea
+$category-cafe: #fef3c7, #b45309
+$category-other: #e5e7eb, #4b5563
+$category-salary: #a7f3d0, #059669
+$category-bonus: #99f6e4, #0d9488
+
+.container
+  height: 100%
+  background-color: #fff
+  display: flex
+  flex-direction: column
+  animation: fadeIn 0.2s ease
+
+@keyframes fadeIn
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+.header
+  padding: 1rem
+  padding-top: 3rem
+  display: flex
+  align-items: center
+  justify-content: space-between
+  background-color: #fff
+  position: sticky
+  top: 0
+  z-index: 20
+
+.title
+  font-size: 1.25rem
+  font-weight: 700
+
+.typeToggle
+  display: flex
+  background-color: #f3f4f6
+  border-radius: 0.5rem
+  padding: 0.25rem
+
+.typeButton
+  padding: 0.375rem 1rem
+  border-radius: 0.375rem
+  font-size: 0.875rem
+  font-weight: 500
+  transition: all 0.2s
+  background: none
+  border: none
+  color: $text-gray
+  cursor: pointer
+
+  &.expenseActive
+    background-color: #fff
+    color: $expense-color
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05)
+
+  &.incomeActive
+    background-color: #fff
+    color: $income-color
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05)
+
+.amountSection
+  padding: 1.5rem
+  text-align: center
+  background-color: #fff
+  z-index: 10
+
+.amountLabel
+  color: $text-gray
+  font-size: 0.875rem
+  margin-bottom: 0.5rem
+
+.amountDisplay
+  position: relative
+  display: inline-block
+  width: 100%
+  max-width: 12.5rem
+
+.currency
+  position: absolute
+  left: 0
+  top: 50%
+  transform: translateY(-50%)
+  font-size: 1.875rem
+  font-weight: 700
+
+  &.expense
+    color: $expense-color
+
+  &.income
+    color: $income-color
+
+.amountInput
+  width: 100%
+  text-align: center
+  font-size: 3rem
+  font-weight: 700
+  letter-spacing: -0.02em
+  background: transparent
+  border: none
+  padding: 0
+  padding-left: 1.5rem
+
+  &:focus
+    outline: none
+
+  &.expense
+    color: $expense-color
+
+    &::placeholder
+      color: rgba(244, 63, 94, 0.3)
+
+  &.income
+    color: $income-color
+
+    &::placeholder
+      color: rgba(16, 185, 129, 0.3)
+
+.categorySection
+  padding: 0 1rem 1rem
+
+.sectionLabel
+  font-size: 0.75rem
+  font-weight: 700
+  color: $text-gray
+  margin-bottom: 0.75rem
+  margin-left: 0.25rem
+
+.categoryGrid
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  gap: 0.75rem
+  margin-bottom: 1.5rem
+
+.categoryButton
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 0.5rem
+  padding: 0.5rem
+  border-radius: 0.75rem
+  transition: all 0.2s
+  background-color: #fff
+  border: 1px solid transparent
+  cursor: pointer
+
+  &:hover
+    background-color: $bg-light
+
+  &.selected
+    background-color: $bg-light
+    border-color: $border-light
+
+.categoryIcon
+  width: 2.5rem
+  height: 2.5rem
+  border-radius: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+
+// カテゴリ別スタイル
+.category-food
+  background-color: nth($category-food, 1)
+  color: nth($category-food, 2)
+
+.category-daily
+  background-color: nth($category-daily, 1)
+  color: nth($category-daily, 2)
+
+.category-transport
+  background-color: nth($category-transport, 1)
+  color: nth($category-transport, 2)
+
+.category-utility
+  background-color: nth($category-utility, 1)
+  color: nth($category-utility, 2)
+
+.category-medical
+  background-color: nth($category-medical, 1)
+  color: nth($category-medical, 2)
+
+.category-hobby
+  background-color: nth($category-hobby, 1)
+  color: nth($category-hobby, 2)
+
+.category-cafe
+  background-color: nth($category-cafe, 1)
+  color: nth($category-cafe, 2)
+
+.category-other
+  background-color: nth($category-other, 1)
+  color: nth($category-other, 2)
+
+.category-salary
+  background-color: nth($category-salary, 1)
+  color: nth($category-salary, 2)
+
+.category-bonus
+  background-color: nth($category-bonus, 1)
+  color: nth($category-bonus, 2)
+
+.categoryName
+  font-size: 0.75rem
+  font-weight: 500
+  color: #4b5563
+
+.noteSection
+  margin-bottom: 1rem
+
+.noteInput
+  width: 100%
+  background-color: $bg-light
+  border: 1px solid $border-light
+  border-radius: 0.75rem
+  padding: 0.75rem 1rem
+  font-size: 0.875rem
+
+  &:focus
+    outline: none
+    ring: 2px solid $primary
+
+.keypadArea
+  margin-top: auto
+  background-color: #fff
+  border-top: 1px solid #f3f4f6
+
+.submitSection
+  padding: 0.5rem 1rem
+
+.submitButton
+  width: 100%
+  padding: 0.875rem
+  border-radius: 0.75rem
+  color: #fff
+  font-weight: 700
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1)
+  transition: all 0.2s
+  border: none
+  cursor: pointer
+
+  &:active
+    transform: scale(0.98)
+
+  &.disabled
+    background-color: #d1d5db
+    cursor: not-allowed
+    box-shadow: none
+
+  &.expenseButton
+    background-color: $expense-color
+    box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3)
+
+  &.incomeButton
+    background-color: $income-color
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3)
