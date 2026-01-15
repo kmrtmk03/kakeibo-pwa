@@ -13,9 +13,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Kakeibo PWA',
-        short_name: 'Kakeibo',
-        description: 'Smart finance management for modern life',
+        name: '家計簿',
+        short_name: '家計簿',
+        description: '家計簿アプリ',
         theme_color: '#1a1a2e',
         background_color: '#1a1a2e',
         icons: [
