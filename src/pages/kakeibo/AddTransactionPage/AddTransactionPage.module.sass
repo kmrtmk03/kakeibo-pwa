@@ -195,6 +195,41 @@
   color: $text-primary
 
 // ==============================================
+// 日付セクション
+// ==============================================
+.dateSection
+  margin-bottom: 1rem
+
+.dateInput
+  width: 100%
+  background: $glass-bg
+  border: 1px solid $border-glass
+  border-radius: 0.875rem
+  padding: 0.875rem 1rem
+  font-size: 0.875rem
+  color: $text-primary
+  transition: all 0.2s ease
+  font-family: inherit
+  -webkit-appearance: none
+
+  &::placeholder
+    color: $text-dim
+
+  &:focus
+    outline: none
+    border-color: $accent-purple
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15)
+
+  &::-webkit-calendar-picker-indicator
+    filter: invert(1)
+    opacity: 0.6
+    cursor: pointer
+    transition: opacity 0.2s ease
+
+    &:hover
+      opacity: 1
+
+// ==============================================
 // メモセクション
 // ==============================================
 .noteSection

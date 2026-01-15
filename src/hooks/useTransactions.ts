@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import type { Transaction, TransactionType, Category } from '../types/transaction'
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '../constants/categories'
+import { useLocalStorage } from './useLocalStorage'
 
 /** LocalStorageのキー */
 const STORAGE_KEY = 'kakeibo_data'
@@ -54,83 +55,63 @@ function fromStoredTransaction(s: StoredTransaction): Transaction {
 }
 
 /**
+ * デモデータ生成
+ */
+function getDemoData(): StoredTransaction[] {
+  const transactions: Transaction[] = [
+    {
+      id: 1,
+      type: 'income',
+      amount: 250000,
+      category: INCOME_CATEGORIES[0],
+      date: new Date().toISOString(),
+      note: '今月分給与',
+    },
+    {
+      id: 2,
+      type: 'expense',
+      amount: 3500,
+      category: EXPENSE_CATEGORIES[0],
+      date: new Date().toISOString(),
+      note: 'スーパー',
+    },
+    {
+      id: 3,
+      type: 'expense',
+      amount: 800,
+      category: EXPENSE_CATEGORIES[6],
+      date: new Date(Date.now() - 86400000).toISOString(),
+      note: 'スタバ',
+    },
+    {
+      id: 4,
+      type: 'expense',
+      amount: 12000,
+      category: EXPENSE_CATEGORIES[3],
+      date: new Date(Date.now() - 172800000).toISOString(),
+      note: '電気代',
+    },
+  ]
+  return transactions.map(toStoredTransaction)
+}
+
+/**
  * 取引データ管理用カスタムフック
  */
 export function useTransactions() {
-  // 取引データ
-  const [transactions, setTransactions] = useState<Transaction[]>([])
+  // ローカルストレージで保存用データを管理
+  const [storedTransactions, setStoredTransactions] = useLocalStorage<StoredTransaction[]>(
+    STORAGE_KEY,
+    getDemoData()
+  )
+
   // 現在表示中の月
   const [currentDate, setCurrentDate] = useState<Date>(new Date())
-  // ローディング状態
-  const [isLoading, setIsLoading] = useState(true)
 
-  /**
-   * 初期データの読み込み
-   */
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-
-    const savedData = localStorage.getItem(STORAGE_KEY)
-    if (savedData) {
-      try {
-        const parsed = JSON.parse(savedData) as StoredTransaction[]
-        // 保存データから取引データに変換
-        const restored = parsed.map(fromStoredTransaction)
-        setTransactions(restored)
-      } catch (error) {
-        console.error('データの読み込みに失敗しました:', error)
-        // エラー時はlocalStorageをクリア
-        localStorage.removeItem(STORAGE_KEY)
-      }
-    } else {
-      // デモデータを設定
-      const demoData: Transaction[] = [
-        {
-          id: 1,
-          type: 'income',
-          amount: 250000,
-          category: INCOME_CATEGORIES[0],
-          date: new Date().toISOString(),
-          note: '今月分給与',
-        },
-        {
-          id: 2,
-          type: 'expense',
-          amount: 3500,
-          category: EXPENSE_CATEGORIES[0],
-          date: new Date().toISOString(),
-          note: 'スーパー',
-        },
-        {
-          id: 3,
-          type: 'expense',
-          amount: 800,
-          category: EXPENSE_CATEGORIES[6],
-          date: new Date(Date.now() - 86400000).toISOString(),
-          note: 'スタバ',
-        },
-        {
-          id: 4,
-          type: 'expense',
-          amount: 12000,
-          category: EXPENSE_CATEGORIES[3],
-          date: new Date(Date.now() - 172800000).toISOString(),
-          note: '電気代',
-        },
-      ]
-      setTransactions(demoData)
-    }
-    setIsLoading(false)
-  }, [])
-
-  /**
-   * データの永続化（カテゴリIDのみ保存）
-   */
-  useEffect(() => {
-    if (typeof window === 'undefined' || isLoading) return
-    const storedData = transactions.map(toStoredTransaction)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(storedData))
-  }, [transactions, isLoading])
+  // アプリ内で扱う形式に変換
+  const transactions = useMemo(() => {
+    return storedTransactions.map(fromStoredTransaction)
+  }, [storedTransactions])
 
   /**
    * 現在月の取引のみをフィルタ
@@ -172,18 +153,20 @@ export function useTransactions() {
    * 取引を追加
    */
   const addTransaction = useCallback(
-    (type: TransactionType, amount: number, category: Category, note: string) => {
+    (type: TransactionType, amount: number, category: Category, note: string, date: Date) => {
       const newTransaction: Transaction = {
         id: Date.now(),
         type,
         amount,
         category,
-        date: new Date().toISOString(),
+        date: date.toISOString(),
         note,
       }
-      setTransactions((prev) => [newTransaction, ...prev])
+
+      const st = toStoredTransaction(newTransaction)
+      setStoredTransactions((prev) => [st, ...prev])
     },
-    []
+    [setStoredTransactions]
   )
 
   /**
@@ -191,9 +174,9 @@ export function useTransactions() {
    */
   const deleteTransaction = useCallback((id: number) => {
     if (window.confirm('この記録を削除しますか？')) {
-      setTransactions((prev) => prev.filter((t) => t.id !== id))
+      setStoredTransactions((prev) => prev.filter((t) => t.id !== id))
     }
-  }, [])
+  }, [setStoredTransactions])
 
   /**
    * 月を変更
@@ -217,19 +200,15 @@ export function useTransactions() {
   }, [])
 
   return {
-    // 状態
-    transactions,
+    transactions, // 全取引データ
     currentDate,
     currentMonthTransactions,
     totalIncome,
     totalExpense,
     balance,
-    isLoading,
-    // アクション
     addTransaction,
     deleteTransaction,
     changeMonth,
     formatYen,
   }
 }
-

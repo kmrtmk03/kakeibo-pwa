@@ -27,7 +27,8 @@ interface AddTransactionPageProps {
     type: TransactionType,
     amount: number,
     category: Category,
-    note: string
+    note: string,
+    date: Date
   ) => void
   /** 追加完了後のコールバック（通常はホーム画面への遷移） */
   onComplete: () => void
@@ -68,6 +69,7 @@ export function AddTransactionPage({
     amount,
     selectedCategory,
     note,
+    selectedDate,
     // 派生値
     categories,
     isSubmitDisabled,
@@ -77,6 +79,7 @@ export function AddTransactionPage({
     handleTypeChange,
     handleCategorySelect,
     handleNoteChange,
+    handleDateChange,
     handleSubmit,
   } = useAddTransaction({ onAddTransaction, onComplete })
 
@@ -133,6 +136,17 @@ export function AddTransactionPage({
           })}
         </div>
 
+        {/* 日付選択 */}
+        <div className={styles.dateSection}>
+          <p className={styles.sectionLabel}>日付</p>
+          <input
+            type="date"
+            value={selectedDate.toISOString().split('T')[0]}
+            onChange={(e) => handleDateChange(new Date(e.target.value))}
+            className={styles.dateInput}
+          />
+        </div>
+
         {/* メモ入力 */}
         <div className={styles.noteSection}>
           <p className={styles.sectionLabel}>メモ (任意)</p>
@@ -177,10 +191,10 @@ export function AddTransactionPage({
             onClick={handleSubmit}
             disabled={isSubmitDisabled}
             className={`${styles.submitButton} ${isSubmitDisabled
-                ? styles.disabled
-                : inputType === 'expense'
-                  ? styles.expenseButton
-                  : styles.incomeButton
+              ? styles.disabled
+              : inputType === 'expense'
+                ? styles.expenseButton
+                : styles.incomeButton
               }`}
           >
             決定

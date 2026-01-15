@@ -24,7 +24,8 @@ interface UseAddTransactionProps {
     type: TransactionType,
     amount: number,
     category: Category,
-    note: string
+    note: string,
+    date: Date
   ) => void
   /** 追加完了時に呼ばれるコールバック（画面遷移など） */
   onComplete: () => void
@@ -43,6 +44,8 @@ interface UseAddTransactionReturn {
   selectedCategory: Category
   /** メモ */
   note: string
+  /** 選択中の日付 */
+  selectedDate: Date
 
   // ========== 派生値 ==========
   /** 表示するカテゴリ一覧（inputTypeに応じて切り替え） */
@@ -61,6 +64,8 @@ interface UseAddTransactionReturn {
   handleCategorySelect: (category: Category) => void
   /** メモ変更時のハンドラ */
   handleNoteChange: (note: string) => void
+  /** 日付変更時のハンドラ */
+  handleDateChange: (date: Date) => void
   /** 決定ボタン押下時のハンドラ */
   handleSubmit: () => void
 }
@@ -119,6 +124,9 @@ export function useAddTransaction({
 
   /** メモ */
   const [note, setNote] = useState('')
+
+  /** 選択中の日付（初期値は今日） */
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date())
 
   // ==============================================
   // 派生値（useMemoで最適化）
@@ -200,6 +208,13 @@ export function useAddTransaction({
   }, [])
 
   /**
+   * 日付変更ハンドラ
+   */
+  const handleDateChange = useCallback((date: Date) => {
+    setSelectedDate(date)
+  }, [])
+
+  /**
    * 決定ボタンハンドラ
    * @description 取引を追加してフォームをリセット
    */
@@ -208,7 +223,7 @@ export function useAddTransaction({
     if (!amount || Number(amount) === 0) return
 
     // 親コンポーネントに取引データを渡す
-    onAddTransaction(inputType, Number(amount), selectedCategory, note)
+    onAddTransaction(inputType, Number(amount), selectedCategory, note, selectedDate)
 
     // フォームをリセット
     setAmount('')
@@ -216,7 +231,7 @@ export function useAddTransaction({
 
     // 完了コールバックを呼び出し（画面遷移など）
     onComplete()
-  }, [amount, inputType, selectedCategory, note, onAddTransaction, onComplete])
+  }, [amount, inputType, selectedCategory, note, selectedDate, onAddTransaction, onComplete])
 
   // ==============================================
   // 戻り値
@@ -228,6 +243,7 @@ export function useAddTransaction({
     amount,
     selectedCategory,
     note,
+    selectedDate,
     // 派生値
     categories,
     isSubmitDisabled,
@@ -237,6 +253,7 @@ export function useAddTransaction({
     handleTypeChange,
     handleCategorySelect,
     handleNoteChange,
+    handleDateChange,
     handleSubmit,
   }
 }
