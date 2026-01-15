@@ -1,123 +1,42 @@
 ---
 name: frontend-design
-description: 高品質でプロダクション品質のフロントエンドインターフェースを作成するためのスキル。コンポーネント、ページ、アプリケーションの構築時に使用。SASS/SCSSとAurora Glassテーマ（グラスモーフィズム）に対応したクリエイティブなデザインを生成します。
+description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.
+license: Complete terms in LICENSE.txt
 ---
 
-# Frontend Design Skill
+This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 
-このスキルは、魅力的でプロダクション品質のフロントエンドインターフェースを作成するためのガイドです。
+The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
 
-## リソース
+## Design Thinking
 
-このスキルには以下の補助リソースが含まれています：
+Before coding, understand the context and commit to a BOLD aesthetic direction:
+- **Purpose**: What problem does this interface solve? Who uses it?
+- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
+- **Constraints**: Technical requirements (framework, performance, accessibility).
+- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
 
-### References（詳細ガイド）
+**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.
 
-- **[sass-patterns.md](references/sass-patterns.md)** - SASS パターン＆ミックスイン活用ガイド
-  - Aurora Glass テーマの使用方法、グラスモーフィズム実装、アニメーションパターン
+Then implement working code (HTML/CSS/JS, React, Vue, etc.) that is:
+- Production-grade and functional
+- Visually striking and memorable
+- Cohesive with a clear aesthetic point-of-view
+- Meticulously refined in every detail
 
-### Assets（テンプレート）
+## Frontend Aesthetics Guidelines
 
-- **[aurora-palette-template.sass](assets/aurora-palette-template.sass)** - カラーパレットテンプレート
-  - 新しいコンポーネント作成時の色選択ガイド
+Focus on:
+- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.
+- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
+- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.
+- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.
+- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.
 
----
+NEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.
 
-## デザイン思考
+Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.
 
-コーディング前に、コンテキストを理解し、**大胆な**美学的方向性を決定します：
+**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.
 
-- **目的**: このインターフェースはどんな問題を解決するか？誰が使うか？
-- **トーン**: 極端な方向性を選ぶ
-  - ミニマル / マキシマリスト
-  - レトロフューチャー / オーガニック
-  - ラグジュアリー / プレイフル
-  - ブルータリスト / ソフト・パステル
-- **制約**: 技術要件（フレームワーク、パフォーマンス、アクセシビリティ）
-- **差別化**: 何がこのデザインを**忘れられない**ものにするか？
-
-> **重要**: 明確なコンセプトを選び、精密に実行する。大胆なマキシマリズムも洗練されたミニマリズムも有効—重要なのは意図性。
-
----
-
-## このプロジェクトのデザインシステム
-
-### Aurora Glass テーマ
-
-プロジェクトでは**グラスモーフィズム**を基調としたダークテーマを採用しています。
-
-👉 詳細は [sass-patterns.md](references/sass-patterns.md) を参照
-
-#### 主要カラー
-
-| 用途 | 変数 | 値 |
-|------|------|-----|
-| 深い背景 | `$bg-deep` | `#0F0F23` |
-| サーフェス | `$bg-surface` | `#1A1A2E` |
-| アクセント（シアン） | `$accent-cyan` | `#00D9FF` |
-| アクセント（ピンク） | `$accent-pink` | `#FF6B9D` |
-| アクセント（パープル） | `$accent-purple` | `#8B5CF6` |
-
-#### グラスカード基本実装
-
-```sass
-.glass-card
-  background: rgba(255, 255, 255, 0.05)
-  backdrop-filter: blur(10px)
-  -webkit-backdrop-filter: blur(10px)
-  border: 1px solid rgba(255, 255, 255, 0.1)
-  border-radius: 16px
-```
-
----
-
-## フロントエンド美学ガイドライン
-
-### 対応技術
-
-- **スタイリング**: SASS/SCSS（CSS Modules）
-- **アニメーション**: CSS Animations, Motion (React)
-- **フレームワーク**: React, Next.js
-
-### 重点ポイント
-
-1. **タイポグラフィ**: 
-   - 汎用的なフォント（Arial, Inter）は避ける
-   - 特徴的なフォントを選択（Google Fonts: Outfit, DM Sans など）
-
-2. **カラー & テーマ**: 
-   - CSS変数で一貫性を保つ
-   - Aurora Glassテーマを活用
-
-3. **モーション**: 
-   - ページ読み込み時のスタガードアニメーション
-   - ホバーエフェクト、マイクロインタラクション
-
-4. **空間構成**: 
-   - 予想外のレイアウト、非対称、オーバーラップ
-   - グリッドを崩す要素
-
-5. **背景 & ビジュアル**: 
-   - グラデーションメッシュ、ノイズテクスチャ
-   - グラスモーフィズム効果
-
----
-
-## 避けるべきパターン
-
-❌ 汎用的なAI生成っぽいデザイン:
-- 過度に使用されるフォント（Inter, Roboto, Arial, システムフォント）
-- 陳腐なカラースキーム（特に白背景に紫グラデーション）
-- 予測可能なレイアウトとコンポーネントパターン
-- コンテキスト固有のキャラクターがないデザイン
-
----
-
-## 実装の複雑さ
-
-美学的ビジョンに合わせて実装の複雑さを調整:
-
-- **マキシマリストデザイン**: 豊富なアニメーション、エフェクト、装飾
-- **ミニマリストデザイン**: 抑制、精密さ、スペーシング・タイポグラフィへの細心の注意
-
-> 💡 エレガンスはビジョンを適切に実行することから生まれる。
+Remember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.
