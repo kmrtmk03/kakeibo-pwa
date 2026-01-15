@@ -1,79 +1,9 @@
 @use "sass:list"
+@use "../../../styles/variables/aurora-theme" as *
 
 // ==============================================
 // 取引追加画面 - Aurora Glass テーマ
 // ==============================================
-
-// カラーパレット
-$bg-deep: #0F0F23
-$bg-surface: #1A1A2E
-$accent-cyan: #00D9FF
-$accent-pink: #FF6B9D
-$accent-purple: #8B5CF6
-$text-primary: #FFFFFF
-$text-muted: rgba(255, 255, 255, 0.6)
-$text-dim: rgba(255, 255, 255, 0.4)
-$border-glass: rgba(255, 255, 255, 0.1)
-$glass-bg: rgba(255, 255, 255, 0.05)
-$glass-bg-hover: rgba(255, 255, 255, 0.08)
-
-// カテゴリカラー (アイコン背景, アイコン色)
-$category-food: rgba(251, 146, 60, 0.2), #FB923C
-$category-daily: rgba(96, 165, 250, 0.2), #60A5FA
-$category-transport: rgba(52, 211, 153, 0.2), #34D399
-$category-fashion: rgba(236, 72, 153, 0.2), #EC4899
-$category-social: rgba(249, 115, 22, 0.2), #F97316
-$category-credit: rgba(59, 130, 246, 0.2), #3B82F6
-$category-hobby: rgba(167, 139, 250, 0.2), #A78BFA
-$category-cafe: rgba(251, 191, 36, 0.2), #FBBF24
-$category-other: rgba(148, 163, 184, 0.2), #94A3B8
-$category-salary: rgba(52, 211, 153, 0.3), #34D399
-$category-bonus: rgba(45, 212, 191, 0.3), #2DD4BF
-
-// カテゴリ別スタイル
-.category-food
-  background: list.nth($category-food, 1)
-  color: list.nth($category-food, 2)
-
-.category-daily
-  background: list.nth($category-daily, 1)
-  color: list.nth($category-daily, 2)
-
-.category-transport
-  background: list.nth($category-transport, 1)
-  color: list.nth($category-transport, 2)
-
-.category-fashion
-  background: list.nth($category-fashion, 1)
-  color: list.nth($category-fashion, 2)
-
-.category-social
-  background: list.nth($category-social, 1)
-  color: list.nth($category-social, 2)
-
-.category-credit
-  background: list.nth($category-credit, 1)
-  color: list.nth($category-credit, 2)
-
-.category-hobby
-  background: list.nth($category-hobby, 1)
-  color: list.nth($category-hobby, 2)
-
-.category-cafe
-  background: list.nth($category-cafe, 1)
-  color: list.nth($category-cafe, 2)
-
-.category-other
-  background: list.nth($category-other, 1)
-  color: list.nth($category-other, 2)
-
-.category-salary
-  background: list.nth($category-salary, 1)
-  color: list.nth($category-salary, 2)
-
-.category-bonus
-  background: list.nth($category-bonus, 1)
-  color: list.nth($category-bonus, 2)
 
 // ==============================================
 // コンテナ

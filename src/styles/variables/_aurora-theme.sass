@@ -1,0 +1,70 @@
+// ==============================================
+// Aurora Glass テーマ - 共通変数定義
+// ==============================================
+@use "sass:list"
+
+// カラーパレット
+$bg-deep: #0F0F23
+$bg-surface: #1A1A2E
+$accent-cyan: #00D9FF
+$accent-pink: #FF6B9D
+$accent-purple: #8B5CF6
+$text-primary: #FFFFFF
+$text-muted: rgba(255, 255, 255, 0.6)
+$text-dim: rgba(255, 255, 255, 0.4)
+$border-glass: rgba(255, 255, 255, 0.1)
+$glass-bg: rgba(255, 255, 255, 0.05)
+$glass-bg-hover: rgba(255, 255, 255, 0.08)
+
+// カテゴリカラー (アイコン背景, アイコン色)
+$category-food: rgba(251, 146, 60, 0.2), #FB923C
+$category-daily: rgba(96, 165, 250, 0.2), #60A5FA
+$category-transport: rgba(52, 211, 153, 0.2), #34D399
+$category-fashion: rgba(236, 72, 153, 0.2), #EC4899
+$category-social: rgba(249, 115, 22, 0.2), #F97316
+$category-credit: rgba(59, 130, 246, 0.2), #3B82F6
+$category-hobby: rgba(167, 139, 250, 0.2), #A78BFA
+$category-cafe: rgba(251, 191, 36, 0.2), #FBBF24
+$category-other: rgba(148, 163, 184, 0.2), #94A3B8
+$category-salary: rgba(52, 211, 153, 0.3), #34D399
+$category-bonus: rgba(45, 212, 191, 0.3), #2DD4BF
+
+// ==============================================
+// カテゴリ別スタイル（共通）
+// ==============================================
+@mixin category-style($category-var)
+  background: list.nth($category-var, 1)
+  color: list.nth($category-var, 2)
+
+.category-food
+  @include category-style($category-food)
+
+.category-daily
+  @include category-style($category-daily)
+
+.category-transport
+  @include category-style($category-transport)
+
+.category-fashion
+  @include category-style($category-fashion)
+
+.category-social
+  @include category-style($category-social)
+
+.category-credit
+  @include category-style($category-credit)
+
+.category-hobby
+  @include category-style($category-hobby)
+
+.category-cafe
+  @include category-style($category-cafe)
+
+.category-other
+  @include category-style($category-other)
+
+.category-salary
+  @include category-style($category-salary)
+
+.category-bonus
+  @include category-style($category-bonus)
