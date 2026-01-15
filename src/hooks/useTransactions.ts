@@ -6,6 +6,54 @@ import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '../constants/categories'
 const STORAGE_KEY = 'kakeibo_data'
 
 /**
+ * 保存用の取引データ型（カテゴリはIDのみ）
+ */
+interface StoredTransaction {
+  id: number
+  type: TransactionType
+  amount: number
+  categoryId: string
+  date: string
+  note: string
+}
+
+/**
+ * カテゴリIDからカテゴリオブジェクトを取得
+ */
+function getCategoryById(id: string, type: TransactionType): Category {
+  const allCategories = type === 'expense' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES
+  return allCategories.find((c) => c.id === id) || allCategories[allCategories.length - 1]
+}
+
+/**
+ * 取引データを保存用に変換
+ */
+function toStoredTransaction(t: Transaction): StoredTransaction {
+  return {
+    id: t.id,
+    type: t.type,
+    amount: t.amount,
+    categoryId: t.category.id,
+    date: t.date,
+    note: t.note,
+  }
+}
+
+/**
+ * 保存データから取引データに変換
+ */
+function fromStoredTransaction(s: StoredTransaction): Transaction {
+  return {
+    id: s.id,
+    type: s.type,
+    amount: s.amount,
+    category: getCategoryById(s.categoryId, s.type),
+    date: s.date,
+    note: s.note,
+  }
+}
+
+/**
  * 取引データ管理用カスタムフック
  */
 export function useTransactions() {
@@ -25,10 +73,14 @@ export function useTransactions() {
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (savedData) {
       try {
-        const parsed = JSON.parse(savedData) as Transaction[]
-        setTransactions(parsed)
+        const parsed = JSON.parse(savedData) as StoredTransaction[]
+        // 保存データから取引データに変換
+        const restored = parsed.map(fromStoredTransaction)
+        setTransactions(restored)
       } catch (error) {
         console.error('データの読み込みに失敗しました:', error)
+        // エラー時はlocalStorageをクリア
+        localStorage.removeItem(STORAGE_KEY)
       }
     } else {
       // デモデータを設定
@@ -72,11 +124,12 @@ export function useTransactions() {
   }, [])
 
   /**
-   * データの永続化
+   * データの永続化（カテゴリIDのみ保存）
    */
   useEffect(() => {
     if (typeof window === 'undefined' || isLoading) return
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions))
+    const storedData = transactions.map(toStoredTransaction)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(storedData))
   }, [transactions, isLoading])
 
   /**
@@ -179,3 +232,4 @@ export function useTransactions() {
     formatYen,
   }
 }
+
