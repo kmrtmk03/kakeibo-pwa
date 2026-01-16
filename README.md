@@ -1,169 +1,110 @@
 # kakeibo-pwa（家計簿PWA）
 
-Vite + React + TypeScript で作成した、シンプルな家計簿アプリの PWA 版です。
-支出/収入の記録、月別の収支サマリー、カテゴリ別の支出分析に対応しています。
-データはローカルストレージに保存され、ブラウザを閉じても保持されます。
+Vite 7 + React 19 + TypeScript 5 で構築された、モダンでシンプルな家計簿プログレッシブウェブアプリ（PWA）です。
+支出・収入の記録、月別サマリー、カテゴリ別分析などの基本機能を備え、データはブラウザの LocalStorage に安全に保存されます。
 
 ## 特徴
 
-- **家計簿の記録**: 支出/収入を切り替えて記録可能
-- **テンキー入力**: 金額はテンキー UI で入力（最大 8 桁）
-- **カテゴリ管理**: 支出/収入それぞれにカテゴリを用意（アイコン/色付き）
-- **月別サマリー**: 月ごとの残高・収入・支出を自動集計
-- **履歴一覧**: 日付順に取引を表示し、個別に削除可能（確認ダイアログあり）
-- **支出分析**: カテゴリ別の合計金額と割合を可視化
-- **PWA 対応**: 追加インストール可能な PWA（manifest + service worker）
-- **ローカル保存**: LocalStorage に永続化（キー: `kakeibo_data`）
+- **直感的な記録**: 支出と収入をスムーズに切り替えて記録。
+- **カスタムテンキー**: 入力しやすさを追求した専用のテンキー UI。
+- **詳細なカテゴリ**: アイコンと色で視覚的に分類されたカテゴリ（支出・収入それぞれに対応）。
+- **インサイト分析**: 月ごとの収支サマリーと、カテゴリ別の支出割合をグラフやリストで可視化。
+- **快適な操作性**: Framer Motion と GSAP を使用した滑らかなアニメーション。
+- **PWA 対応**: オフラインでも利用可能で、ホーム画面に追加してネイティブアプリのように使用可能。
+- **データ永続化**: すべてのデータは LocalStorage に保存されるため、会員登録不要で即座に利用可能。
 
 ## 画面構成
 
-- **ホーム** (`HomePage`)
-  - 月切り替え（前月/次月）
-  - 今月の残高/収入/支出
-  - 取引履歴一覧
-- **記録追加** (`AddTransactionPage`)
-  - 支出/収入の切り替え
+- **ホーム (`HomePage`)**
+  - 月間収支サマリー（残高・収入・支出）
+  - 取引履歴の一覧表示と削除機能
+  - 月の切り替え機能
+- **記録追加 (`AddTransactionPage`)**
+  - 金額入力（テンキー UI）
   - カテゴリ選択
-  - 日付入力
-  - メモ入力（任意）
-  - テンキーによる金額入力
-- **分析** (`StatsPage`)
-  - 月切り替え
-  - 支出合計の表示
-  - カテゴリ別の金額・割合の表示
-
-## データ仕様
-
-### 取引データ
-
-- `id`: タイムスタンプ
-- `type`: `expense` | `income`
-- `amount`: 数値（円）
-- `category`: カテゴリオブジェクト
-- `date`: ISO 8601 文字列
-- `note`: 文字列（任意）
-
-### カテゴリ
-
-`src/constants/categories.ts` で定義しています。
-
-- **支出カテゴリ**
-  - 食費 / 日用品 / 交通費 / 衣服 / 交際費 / カード / 趣味 / カフェ / その他
-- **収入カテゴリ**
-  - 給与 / ボーナス / その他
-
-## ローカルストレージ
-
-- 初回起動時はデモデータが投入されます
-- データをリセットしたい場合は、ブラウザの LocalStorage から
-  `kakeibo_data` を削除してください
+  - 日付・メモ入力
+- **分析 (`StatsPage`)**
+  - カテゴリ別支出内訳（金額・パーセンテージ）
+  - 月別支出合計の推移確認
 
 ## 使用技術
 
-- **Core**: Vite 7 / React 19 / TypeScript 5
-- **Styling**: Sass / CSS Modules
-- **Icons**: lucide-react
-- **Routing**: React Router DOM
+### Core
+- **Framework**: React 19
+- **Build Tool**: Vite 7
+- **Language**: TypeScript 5
+- **Routing**: React Router 7 (DOM)
+
+### Styling & Animation
+- **Styling**: Sass (SASS syntax) / CSS Modules
+- **Animation**: Framer Motion, GSAP
+- **Icons**: Lucide React
+
+### PWA & Utilities
 - **PWA**: vite-plugin-pwa
-- **Linting**: ESLint（Flat Config）
-- **Utilities**: Sharp（アイコン生成）
-
-## 必要な環境
-
-- Node.js（LTS 推奨）
-- パッケージマネージャー: pnpm（推奨）または npm
-
-## セットアップ
-
-```bash
-# pnpm を使用する場合（推奨）
-pnpm install
-
-# npm を使用する場合
-npm install
-```
-
-## 開発サーバー
-
-```bash
-pnpm dev
-# または
-npm run dev
-```
-
-ブラウザで `http://localhost:5173/` を開きます。
-
-## ビルド
-
-```bash
-pnpm build
-# または
-npm run build
-```
-
-出力は `dist/` に生成されます。
-
-## プレビュー
-
-```bash
-pnpm preview
-# または
-npm run preview
-```
-
-## Lint
-
-```bash
-pnpm lint
-# または
-npm run lint
-```
-
-## PWA アイコン生成
-
-`public/images/ichigo-public.png` を元にアイコンを生成します。
-
-```bash
-node generate-icons.js
-```
-
-生成されるファイル:
-
-- `public/pwa-192x192.png`
-- `public/pwa-512x512.png`
-- `public/maskable-icon-512x512.png`
+- **Icon Generation**: Sharp
+- **Utility**: Date-fns 代替としての自作 `TimeUtil`
 
 ## プロジェクト構成
 
 ```
 .
-├── public/
-│   ├── images/                    # 元画像など
-│   ├── pwa-192x192.png             # PWA アイコン
-│   ├── pwa-512x512.png             # PWA アイコン
-│   └── maskable-icon-512x512.png   # PWA マスカブルアイコン
+├── .agent/                    # AI エージェント用スキル・設定
+├── public/                    # 静的資産（アイコン、PWA 用画像）
 ├── src/
-│   ├── components/                 # UI コンポーネント（Navigation, NumPad など）
-│   ├── constants/                  # 定数（カテゴリ定義）
-│   ├── hooks/                      # カスタムフック
-│   ├── pages/kakeibo/              # 画面コンポーネント
-│   ├── styles/                     # Sass 変数/ミックスイン/グローバルスタイル
-│   ├── types/                      # 型定義
-│   ├── App.tsx                     # ルーティング
-│   └── main.tsx                    # エントリーポイント
-├── generate-icons.js               # PWA アイコン生成スクリプト
-├── vite.config.ts                  # Vite/PWA/Sass 設定
-└── README.md
+│   ├── components/            # 共通 UI コンポーネント（Navigation, NumPad 等）
+│   ├── constants/             # 定数定義（カテゴリ、設定値）
+│   ├── hooks/                 # カスタムフック（データ操作、スクロール制御等）
+│   ├── libs/                  # ユーティリティライブラリ（TimeUtil 等）
+│   ├── pages/kakeibo/         # 画面コンポーネント
+│   ├── styles/                # Sass 設計（変数、ミックスイン、グローバル）
+│   ├── types/                 # TypeScript 型定義
+│   ├── App.tsx                # ルーティング・全体レイアウト
+│   └── main.tsx               # エントリーポイント
+├── generate-icons.js          # PWA アイコン自動生成スクリプト
+└── vite.config.ts             # Vite / PWA / Sass 統合設定
 ```
 
-## 開発メモ
+## 開発ガイド
 
-- `vite.config.ts` により、全 Sass ファイルで `variables` と `mixins` が自動読み込みされます。
-- `vite-plugin-pwa` の `registerType: autoUpdate` により、サービスワーカーは自動更新されます。
-- `base` は `/` です。サブディレクトリ配下に配置する場合は適宜変更してください。
+### 必要な環境
+- Node.js (LTS 推奨)
+- pnpm (推奨) または npm / yarn
 
-## コミットメッセージ例
-
+### セットアップ
+```bash
+pnpm install
 ```
-docs: README を最新仕様に更新
+
+### 開発サーバーの起動
+```bash
+pnpm dev
 ```
+
+### ビルドとプレビュー
+```bash
+pnpm build
+pnpm preview
+```
+
+### アイコンの生成
+`public/images/ichigo-public.png` をベースに、各サイズおよびマスカブルアイコンを生成します。
+```bash
+node generate-icons.js
+```
+
+## 技術的なポイント
+
+- **Sass 構成**: `vite.config.ts` の `additionalData` 設定により、すべての `.sass` ファイルで変数値 (`v.$variable`) とミックスイン (`m.mixin()`) が自動的にインポートされ、効率的なスタイリングが可能です。
+- **カスタムエージェント**: `.agent/skills` 配下に、コードレビューやコメント記述を補助する AI エージェント用の定義が含まれています。
+- **パフォーマンス**: PWA の `autoUpdate` 設定により、バックグラウンドでサービスワーカーが常に最新の状態に保たれます。
+
+## コミットメッセージ規約
+以下のプレフィックスを推奨します。
+- `feat`: 新機能
+- `fix`: バグ修正
+- `docs`: ドキュメント作成・更新
+- `style`: コードの意味に影響を与えない変更（ホワイトスペース、フォーマット、セミコロンの欠落など）
+- `refactor`: バグ修正も機能追加も行わないコード変更
+- `test`: テストの追加・修正
+- `chore`: ビルドプロセスやドキュメント生成などの補助ツール、ライブラリの変更
