@@ -1,33 +1,89 @@
-# Anti Playground (Vite React Template)
+# kakeibo-pwa（家計簿PWA）
 
-このリポジトリは、Vite + React + TypeScript をベースにしたモダンな開発テンプレート兼学習用プレイグラウンドです。
-Sass と CSS Modules を利用した堅牢なスタイル管理に加え、アニメーションライブラリやルーティングがセットアップされています。
+Vite + React + TypeScript で作成した、シンプルな家計簿アプリの PWA 版です。
+支出/収入の記録、月別の収支サマリー、カテゴリ別の支出分析に対応しています。
+データはローカルストレージに保存され、ブラウザを閉じても保持されます。
 
-## 必要な環境
+## 特徴
 
-- Node.js: v23.7.0 以上
-- パッケージマネージャー: pnpm (推奨) または npm
+- **家計簿の記録**: 支出/収入を切り替えて記録可能
+- **テンキー入力**: 金額はテンキー UI で入力（最大 8 桁）
+- **カテゴリ管理**: 支出/収入それぞれにカテゴリを用意（アイコン/色付き）
+- **月別サマリー**: 月ごとの残高・収入・支出を自動集計
+- **履歴一覧**: 日付順に取引を表示し、個別に削除可能（確認ダイアログあり）
+- **支出分析**: カテゴリ別の合計金額と割合を可視化
+- **PWA 対応**: 追加インストール可能な PWA（manifest + service worker）
+- **ローカル保存**: LocalStorage に永続化（キー: `kakeibo_data`）
+
+## 画面構成
+
+- **ホーム** (`HomePage`)
+  - 月切り替え（前月/次月）
+  - 今月の残高/収入/支出
+  - 取引履歴一覧
+- **記録追加** (`AddTransactionPage`)
+  - 支出/収入の切り替え
+  - カテゴリ選択
+  - 日付入力
+  - メモ入力（任意）
+  - テンキーによる金額入力
+- **分析** (`StatsPage`)
+  - 月切り替え
+  - 支出合計の表示
+  - カテゴリ別の金額・割合の表示
+
+## データ仕様
+
+### 取引データ
+
+- `id`: タイムスタンプ
+- `type`: `expense` | `income`
+- `amount`: 数値（円）
+- `category`: カテゴリオブジェクト
+- `date`: ISO 8601 文字列
+- `note`: 文字列（任意）
+
+### カテゴリ
+
+`src/constants/categories.ts` で定義しています。
+
+- **支出カテゴリ**
+  - 食費 / 日用品 / 交通費 / 衣服 / 交際費 / カード / 趣味 / カフェ / その他
+- **収入カテゴリ**
+  - 給与 / ボーナス / その他
+
+## ローカルストレージ
+
+- 初回起動時はデモデータが投入されます
+- データをリセットしたい場合は、ブラウザの LocalStorage から
+  `kakeibo_data` を削除してください
 
 ## 使用技術
 
-- **Core**: Vite 7 / React 19 / TypeScript
-- **Styling**: Sass (`.sass`) / CSS Modules
-- **Animation**: [Framer Motion](https://www.framer.com/motion/) / [GSAP](https://gsap.com/)
-- **Routing**: [React Router DOM](https://reactrouter.com/)
-- **Linting**: ESLint (Flat Config)
-- **Utilities**: Sharp (画像処理)
+- **Core**: Vite 7 / React 19 / TypeScript 5
+- **Styling**: Sass / CSS Modules
+- **Icons**: lucide-react
+- **Routing**: React Router DOM
+- **PWA**: vite-plugin-pwa
+- **Linting**: ESLint（Flat Config）
+- **Utilities**: Sharp（アイコン生成）
+
+## 必要な環境
+
+- Node.js（LTS 推奨）
+- パッケージマネージャー: pnpm（推奨）または npm
 
 ## セットアップ
 
 ```bash
-# pnpmを使用する場合（推奨）
+# pnpm を使用する場合（推奨）
 pnpm install
 
-# npmを使用する場合
+# npm を使用する場合
 npm install
 ```
 
-## 開発サーバーの起動
+## 開発サーバー
 
 ```bash
 pnpm dev
@@ -45,51 +101,69 @@ pnpm build
 npm run build
 ```
 
-出力は `dist` ディレクトリに生成されます。
+出力は `dist/` に生成されます。
+
+## プレビュー
+
+```bash
+pnpm preview
+# または
+npm run preview
+```
+
+## Lint
+
+```bash
+pnpm lint
+# または
+npm run lint
+```
+
+## PWA アイコン生成
+
+`public/images/ichigo-public.png` を元にアイコンを生成します。
+
+```bash
+node generate-icons.js
+```
+
+生成されるファイル:
+
+- `public/pwa-192x192.png`
+- `public/pwa-512x512.png`
+- `public/maskable-icon-512x512.png`
 
 ## プロジェクト構成
 
 ```
-react-template/
+.
+├── public/
+│   ├── images/                    # 元画像など
+│   ├── pwa-192x192.png             # PWA アイコン
+│   ├── pwa-512x512.png             # PWA アイコン
+│   └── maskable-icon-512x512.png   # PWA マスカブルアイコン
 ├── src/
-│   ├── main.tsx            # エントリーポイント
-│   ├── App.tsx             # メインコンポーネント（ルーティング設定）
-│   ├── App.sass            # アプリ全体の共通スタイル
-│   ├── components/         # 再利用可能なコンポーネント
-│   ├── hooks/              # カスタムフック (例: useScrollLock.ts)
-│   ├── libs/               # 外部ライブラリのラッパーや共通ユーティリティ (例: TimeUtil.ts)
-│   ├── styles/             # グローバルスタイル定義
-│   │   ├── reset.sass      # リセットCSS
-│   │   ├── mixins/         # Sass mixins (_font.sass, _media-query.sass 等)
-│   │   └── variables/      # Sass 変数 (_color.sass, _layout.sass 等)
-│   └── global.d.ts         # 型定義
-└── tools/                  # 開発補助ツール
-    └── imageCompile/       # 高品質な画像圧縮ツール
+│   ├── components/                 # UI コンポーネント（Navigation, NumPad など）
+│   ├── constants/                  # 定数（カテゴリ定義）
+│   ├── hooks/                      # カスタムフック
+│   ├── pages/kakeibo/              # 画面コンポーネント
+│   ├── styles/                     # Sass 変数/ミックスイン/グローバルスタイル
+│   ├── types/                      # 型定義
+│   ├── App.tsx                     # ルーティング
+│   └── main.tsx                    # エントリーポイント
+├── generate-icons.js               # PWA アイコン生成スクリプト
+├── vite.config.ts                  # Vite/PWA/Sass 設定
+└── README.md
 ```
 
-## 開発ツール
+## 開発メモ
 
-### 画像圧縮ツール (`tools/imageCompile`)
+- `vite.config.ts` により、全 Sass ファイルで `variables` と `mixins` が自動読み込みされます。
+- `vite-plugin-pwa` の `registerType: autoUpdate` により、サービスワーカーは自動更新されます。
+- `base` は `/` です。サブディレクトリ配下に配置する場合は適宜変更してください。
 
-Sharp を使用した高品質な画像圧縮ツールが含まれています。
+## コミットメッセージ例
 
-```bash
-cd tools/imageCompile
-npm install
-npm run compress        # 品質70で圧縮
-npm run compress:80     # 品質80で圧縮
 ```
-
-詳細は [`tools/imageCompile/README.md`](tools/imageCompile/README.md) を参照してください。
-
-## 特徴
-
-- **スタイル自動読み込み**: `vite.config.ts` の設定により、すべての Sass ファイルで `mixins` と `variables` が自動的に利用可能です。
-- **型安全**: TypeScript をフル活用し、コンポーネントやユーティリティの型安全性を確保しています。
-- **リッチなアニメーション**: Framer Motion と GSAP が導入済みで、高度な UI アニメーションを容易に実装できます。
-- **サブディレクトリ対応**: 必要に応じて `vite.config.ts` の `base` や React Router の `basename` を設定することで、サブディレクトリ配下での動作も可能です。
-
-## コミットメッセージの提案
-
-`docs: README.md を現在のプロジェクト構成と依存関係に合わせて更新`
-
+docs: README を最新仕様に更新
+```
